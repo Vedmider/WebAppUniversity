@@ -7,10 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.study.projects.domain.Classroom;
 
 public class ClassroomDao extends DAOParent<Classroom, Integer>{
 	private int universityId;
+	private static final Logger logger = LoggerFactory.getLogger(ClassroomDao.class);
 	private static final String insertQuery = "INSERT INTO classrooms (class_number, university_id) VALUES (?, ?)";
 	private static final String updateQuery = "UPDATE classrooms SET class_number = ? WHERE id = ?";
 	private static final String retrieveQuery = "SELECT class_number FROM classrooms WHERE id = ?";
@@ -37,7 +41,7 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			resultSet = statement.getGeneratedKeys();
 			
 			if(rowsAffected != 1) {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 			while(resultSet.next()) {
@@ -51,12 +55,11 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
-				}
+					logger.debug("Statement close");				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 			} catch (SQLException e) {
 				throw new UniversityDBAccessException("Cannot insert to database", e);
@@ -80,7 +83,7 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			if(rowsAffected == 1) {
 				return true;
 			} else {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 		} catch(SQLException e) {
@@ -89,12 +92,12 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 				
 			} catch (SQLException e) {
@@ -124,17 +127,17 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			try{
 				if(resultSet != null) {
 					resultSet.close();
-					System.out.println("ResultSet close");
+					logger.debug("ResultSet close");
 				}
 				
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}	
 			} catch (SQLException e) {
 				throw new UniversityDBAccessException("cannot close connection", e);
@@ -158,7 +161,7 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			if(rowsAffected == 1) {
 				return true;
 			} else {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 		} catch(SQLException e) {
@@ -167,12 +170,12 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 				
 			} catch (SQLException e) {
@@ -201,17 +204,17 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			try{
 				if(resultSet != null) {
 					resultSet.close();
-					System.out.println("ResultSet close");
+					logger.debug("ResultSet close");
 				}
 				
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}	
 			} catch (SQLException e) {
 				throw new UniversityDBAccessException("cannot close connection", e);

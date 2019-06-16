@@ -7,29 +7,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 	protected DaoFactory daoFactory = DaoFactory.getInstance();
-	
+	private static final Logger logger = LoggerFactory.getLogger(DAOParent.class);
 	protected abstract String getInsertSQL();
-	
 	protected abstract String getUpdateSQL();
-	
 	protected abstract String getRetrieveSQL();
-	
 	protected abstract String getDeleteSQL();
-	
 	protected abstract String getAllSQL();
-	
 	protected abstract void statementForInsert(PreparedStatement statement, T object) throws SQLException;
-	
 	protected abstract void statementForUpdate(PreparedStatement statement, T object) throws SQLException;
-	
 	protected abstract void statementForRetrieve(PreparedStatement statement, PK key) throws SQLException;
-	
 	protected abstract void statementForRemove(PreparedStatement statement, T object) throws SQLException;
-	
 	protected abstract T parseRetrieveSQL(ResultSet resultSet) throws SQLException;
-	
 	protected abstract ArrayList<T> parseGetAllSQL(ResultSet resultSet) throws SQLException;
 	
 	@Override
@@ -49,7 +42,7 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			resultSet = statement.getGeneratedKeys();
 			
 			if(rowsAffected != 1) {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 			while(resultSet.next()) {
@@ -63,12 +56,12 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -93,7 +86,7 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			if(rowsAffected == 1) {
 				return true;
 			} else {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 		} catch(SQLException e) {
@@ -102,12 +95,12 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 				
 			} catch (SQLException e) {
@@ -138,17 +131,17 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			try{
 				if(resultSet != null) {
 					resultSet.close();
-					System.out.println("ResultSet close");
+					logger.debug("ResultSet close");
 				}
 				
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}	
 			} catch (SQLException e) {
 				throw new  UniversityDBAccessException("Cannot close connection to database", e);
@@ -173,7 +166,7 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			if(rowsAffected == 1) {
 				return true;
 			} else {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 		} catch(SQLException e) {
@@ -182,12 +175,12 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 				
 			} catch (SQLException e) {
@@ -217,17 +210,17 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 			try{
 				if(resultSet != null) {
 					resultSet.close();
-					System.out.println("ResultSet close");
+					logger.debug("ResultSet close");
 				}
 				
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}	
 			} catch (SQLException e) {
 				throw new  UniversityDBAccessException("Cannot close connection to database", e);

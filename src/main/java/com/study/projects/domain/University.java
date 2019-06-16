@@ -3,6 +3,9 @@ package com.study.projects.domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.study.projects.dao.ClassroomDao;
 import com.study.projects.dao.GroupDao;
 import com.study.projects.dao.LectureDao;
@@ -13,6 +16,7 @@ import com.study.projects.dao.UniversityDBAccessException;
 import java.time.LocalDate;
 
 public class University {
+	private static final Logger logger = LoggerFactory.getLogger(University.class);
 	private ArrayList<Student> students = new ArrayList<>();
 	private ArrayList<Teacher> teachers = new ArrayList<>();
 	private ArrayList<Group> groups = new ArrayList<>();
@@ -37,7 +41,7 @@ public class University {
 			classrooms = classroomDao.getAll();
 			yearSchedule = makeYearShedule(lectureDao.getAll());
 		} catch (UniversityDBAccessException e) {
-			e.printStackTrace();
+			logger.error("Can not create University object", e);
 		} 
 	
 	}
@@ -58,7 +62,7 @@ public class University {
 			classrooms = classroomDao.getAll();
 			yearSchedule = makeYearShedule(lectureDao.getAll());
 		} catch (UniversityDBAccessException e) {
-			e.printStackTrace();
+			logger.error("Can not create University object", e);
 		} 
 	
 	}
@@ -110,8 +114,20 @@ public class University {
 	}
 	
 	public boolean addLecture(Lecture lecture) {
+		Integer id;
 		if(!groups.contains(lecture.getGroup()) || !teachers.contains(lecture.getTeacher()) || !classrooms.contains(lecture.getClassroom())) {
 			return false;
+		}
+		
+		logger.debug("adding lecture {} to University {}", lecture.getId(), this.getName());
+		
+		try {
+			id = lectureDao.insertInToDB(lecture);
+			if (id == null) {
+				return false;
+			} 
+		} catch(UniversityDBAccessException e) {
+			logger.error("Can not insert lecture to DB", e);
 		}
 		
 		DaySchedule tempSchedule;
@@ -138,6 +154,7 @@ public class University {
 			return false;
 		}
 		
+		logger.debug("removing lecture {} to University {}", lecture.getId(), this.getName());
 		DaySchedule tempSchedule;
 		LocalDate date = lecture.getDate().toLocalDate();
 		
@@ -176,6 +193,8 @@ public class University {
 		if(!teachers.contains(teacher)) {
 			return null;
 		}
+		
+		logger.debug("getting teacher {} schedule for {} month to University {}", teacher.getFullName(), month, this.getName());
 		DaySchedule tempDaySchedule;
 		ArrayList<Lecture> tempLectureArray = new ArrayList<Lecture>();
 		
@@ -193,6 +212,7 @@ public class University {
 			return null;
 		}
 		
+		logger.debug("getting teacher {} schedule for {} date to University {}", teacher.getFullName(), date.toString(), this.getName());
 		DaySchedule tempDaySchedule = yearSchedule.get(date);
 		return tempDaySchedule.getTeacherDaySchedule(teacher);
 	}
@@ -202,6 +222,7 @@ public class University {
 			return null;
 		}
 		
+		logger.debug("getting student {} schedule for {} month to University {}", student.getFullName(), month, this.getName());
 		DaySchedule tempDaySchedule;
 		ArrayList<Lecture> tempLectureArray = new ArrayList<Lecture>();
 		
@@ -219,6 +240,7 @@ public class University {
 			return null;
 		}
 		
+		logger.debug("getting student {} schedule for {} month to University {}", student.getFullName(), date.toString(), this.getName());
 		DaySchedule tempDaySchedule = yearSchedule.get(date);
 		return tempDaySchedule.getStudentDaySchedule(student);
 	}
@@ -228,9 +250,10 @@ public class University {
 		HashMap<LocalDate, DaySchedule> tempYearSchedule = new HashMap<LocalDate, DaySchedule>();
 		DaySchedule day;
 		if(lectures == null) {
-			System.out.println("lectures is null");
+			logger.info("there is no lectures to makeYearShedule in University {}", this.getName());
 		}
 		
+		logger.debug("making year schedule for University {}", this.getName());
 		for(Lecture l : lectures) {
 			if(tempYearSchedule.containsKey(l.getDate().toLocalDate())) {
 				day = tempYearSchedule.get(l.getDate().toLocalDate());
@@ -246,6 +269,7 @@ public class University {
 	}
 	
 	private void initiateDao(int universityId) {
+		logger.debug("initiating DAO classes for University {} ID {}", this.getName(), this.getId());
 		classroomDao = new ClassroomDao(universityId);
 		studentDao = new StudentDao(universityId);
 		teacherDao = new TeacherDao(universityId);

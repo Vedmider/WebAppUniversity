@@ -22,20 +22,17 @@ import com.study.projects.dao.TeacherDao;
 import com.study.projects.dao.UniversityDBAccessException;
 
 public class UniversityTest {
-	
 	private University university;
 	private ClassroomDao classroomDao = mock(ClassroomDao.class);
 	private GroupDao groupDao = mock(GroupDao.class);
 	private TeacherDao teacherDao = mock(TeacherDao.class);
 	private StudentDao studentDao = mock(StudentDao.class);
 	private LectureDao lectureDao = mock(LectureDao.class);
-	
 	private Teacher teacherChernushenko;
 	private Teacher teacherLane;
 	private Student studentJobs;
 	private Group groupMTZ;
 	private Group groupBBS;
-	
 	
 	
 	
@@ -278,7 +275,11 @@ public class UniversityTest {
 		Classroom class401 = new Classroom(401);
 		class401.setId(129);
 		Lecture testLecture = new Lecture("Math", class401, groupBBS, teacherChernushenko, LocalDateTime.of(2017, 6, 20, 11, 30));
-		//when(lectureDao.insertInToDB(testLecture)).thenReturn(null);
+		try{
+			when(lectureDao.insertInToDB(testLecture)).thenReturn(null);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		assertFalse(university.addLecture(testLecture));
 	}
 	
