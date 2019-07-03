@@ -15,7 +15,7 @@ public class UniversityController {
 	
 	private UniversityManager manager = new UniversityManager();
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/manager", method=RequestMethod.GET)
     public String getOrderPage(Model model) {
 		
 		ArrayList<University> universityList = manager.getAll();
