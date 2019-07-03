@@ -114,7 +114,7 @@ public class University {
 	}
 	
 	public boolean addLecture(Lecture lecture) {
-		Integer id;
+		Integer id = null;
 		if(!groups.contains(lecture.getGroup()) || !teachers.contains(lecture.getTeacher()) || !classrooms.contains(lecture.getClassroom())) {
 			return false;
 		}
@@ -132,6 +132,7 @@ public class University {
 		
 		DaySchedule tempSchedule;
 		LocalDate date = lecture.getDate().toLocalDate();
+		lecture.setId(id);
 		
 		if(yearSchedule.containsKey(date)) {
 			tempSchedule = yearSchedule.get(date);    
@@ -155,6 +156,12 @@ public class University {
 		}
 		
 		logger.debug("removing lecture {} to University {}", lecture.getId(), this.getName());
+		try {
+			lectureDao.removeFromDB(lecture);
+		} catch(UniversityDBAccessException e) {
+			logger.error("Can not remove from DB", e);
+		}
+		
 		DaySchedule tempSchedule;
 		LocalDate date = lecture.getDate().toLocalDate();
 		

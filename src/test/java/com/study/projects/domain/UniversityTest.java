@@ -261,7 +261,11 @@ public class UniversityTest {
 		Classroom class401 = new Classroom(401);
 		class401.setId(129);
 		Lecture testLecture = new Lecture("Math", class401, groupMTZ, teacherChernushenko, LocalDateTime.of(2017, 9, 20, 11, 30));
-		//when(lectureDao.insertInToDB(testLecture)).thenReturn(Integer.valueOf(32));
+		try{
+			when(lectureDao.insertInToDB(testLecture)).thenReturn(Integer.valueOf(32));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		assertTrue(university.addLecture(testLecture));
 		ArrayList<Lecture> dayLectures = university
 								         .getYearSchedule()
