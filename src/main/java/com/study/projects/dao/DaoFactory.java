@@ -6,20 +6,27 @@ import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class DaoFactory {
 	private static final Logger logger = LoggerFactory.getLogger(DaoFactory.class);
-	private static final String user = "postgres";
-	private static final String password = "76564532";
-	private static final String url = "jdbc:postgresql://localhost:5433/postgres";
-	private static final String driver = "org.postgresql.Driver";
+	@Value("${connection.user}")
+	private String user;
+	@Value("${connection.password}")
+	private String password;
+	@Value("${connection.URL}")
+	private String url;
+	@Value("${connection.driver}")
+	private String driver = "org.postgresql.Driver";
 	private static final DaoFactory instance = new DaoFactory();
 	
 	public DaoFactory() {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			logger.error("PostgreSQL JDBC Driver is not found. Include it in your library path ", e);
+			logger.error(" JDBC Driver is not found. Include it in your library path ", e);
 		}
 	}
 	
