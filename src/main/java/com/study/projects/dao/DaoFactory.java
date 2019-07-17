@@ -19,7 +19,7 @@ public class DaoFactory {
 	@Value("${connection.URL}")
 	private String url;
 	@Value("${connection.driver}")
-	private String driver = "org.postgresql.Driver";
+	private String driver;
 	private static final DaoFactory instance = new DaoFactory();
 	
 	public DaoFactory() {
