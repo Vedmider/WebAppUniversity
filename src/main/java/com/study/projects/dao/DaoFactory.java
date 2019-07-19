@@ -1,8 +1,6 @@
 package com.study.projects.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DaoFactory {
 	private static final Logger logger = LoggerFactory.getLogger(DaoFactory.class);
+	private static final DaoFactory instance = new DaoFactory();
 	@Value("${connection.user}")
 	private String user;
 	@Value("${connection.password}")
@@ -20,13 +19,29 @@ public class DaoFactory {
 	private String url;
 	@Value("${connection.driver}")
 	private String driver;
-	private static final DaoFactory instance = new DaoFactory();
-	
+	@Value("${create.table.classrooms}")
+	private String createClassrooms;
+	@Value("${create.table.groups}")
+	private String createGroups;
+	@Value("${create.table.lectures}")
+	private String createLectures;
+	@Value("${create.table.students}")
+	private String createStudents;
+	@Value("${create.table.teachers}")
+	private String createTeachers;
+	@Value("${create.table.universities}")
+	private String createUniversities;
+
+
 	public DaoFactory() {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
 			logger.error(" JDBC Driver is not found. Include it in your library path ", e);
+		}
+
+		if (driver.equals("org.h2.Driver")){
+			initiateDatabase();
 		}
 	}
 	
@@ -46,5 +61,27 @@ public class DaoFactory {
 	
 	public static DaoFactory getInstance() {
 		return instance;
+	}
+
+	private void initiateDatabase() {
+		Connection con = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try{
+			con = DaoFactory.getInstance().getConnection();
+			statement = con.createStatement();
+			boolean result = statement.execute(createClassrooms);
+
+
+
+
+		} catch (UniversityDBAccessException e){
+
+		} catch (SQLException e){
+
+		}
+
+
 	}
 }
