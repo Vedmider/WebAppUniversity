@@ -2,6 +2,7 @@ package com.study.projects.spring.controller;
 
 import java.util.ArrayList;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,8 @@ public class UniversityController {
 	UniversityManager manager(){
 		return new UniversityManager();
 	}
-	
+
+
 	@GetMapping("/manager")
     public String getUniversitiesListPage(Model model) {
 		
