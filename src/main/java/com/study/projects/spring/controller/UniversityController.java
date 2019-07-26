@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.study.projects.domain.UniversityManager;
 import com.study.projects.domain.University;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UniversityController {
@@ -39,4 +38,18 @@ public class UniversityController {
 		return "greeting";
 	}
 
+	@GetMapping("/manager/add")
+	public String addUniversityPage(){
+
+		return "add-university";
+	}
+
+
+
+	@PostMapping("/manager/add")
+	public String addNewUniversity(@RequestParam("universityName") String universityName ) {
+
+		manager.insert(universityName);
+		return "redirect:/manager";
+	}
 }

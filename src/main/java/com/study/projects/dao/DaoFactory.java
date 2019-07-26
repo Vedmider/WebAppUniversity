@@ -72,21 +72,19 @@ public class DaoFactory {
 		try{
 
 			statement = con.createStatement();
-			boolean result = statement.execute(createUniversities);
-			System.out.println("creating table is " + result + "SQL query is" + createUniversities);
-			//result = statement.execute(createGroups);
-			//System.out.println("creating table group is " + result);
-			//result = statement.execute(createTeachers);
-			//System.out.println("creating table lectures is " + result);
-			//result = statement.execute(createStudents);
-			//System.out.println("creating students is " + result);
-			//result = statement.execute(createClassrooms);
-			//System.out.println("creating Universities is " + result);
-			//result = statement.execute(createLectures);
-			//System.out.println("Creating table teachers is " + result);
+			con.setAutoCommit(false);
+			statement.addBatch(createUniversities);
+			statement.addBatch("INSERT INTO universities (university_name) VALUES ('SORBONNE')");
+			statement.addBatch(createGroups);
+			statement.addBatch(createTeachers);
+			statement.addBatch(createStudents);
+			statement.addBatch(createClassrooms);
+			statement.addBatch(createLectures);
+			statement.executeBatch();
+			con.commit();
 
 		} catch (SQLException e){
-		    logger.error("Can not initiate tables in Database");
+		    logger.error("Can not initiate tables in Database", e);
 		}
 
 
