@@ -44,12 +44,30 @@ public class UniversityController {
 		return "add-university";
 	}
 
-
-
 	@PostMapping("/manager/add")
 	public String addNewUniversity(@RequestParam("universityName") String universityName ) {
 
 		manager.insert(universityName);
+		return "redirect:/manager";
+	}
+
+	@GetMapping("/universities/delete/{id}")
+	public String deleteUniversity(@PathVariable("id") int id){
+		University university = manager.getById(id);
+		manager.delete(university.getName(), id);
+		return "redirect:/manager";
+	}
+
+	@GetMapping("/universities/edit/{id}")
+	public String updateUniversityPage(@PathVariable("id") int id, Model model){
+		University university = manager.getById(id);
+		model.addAttribute("university", university);
+		return "update-university";
+	}
+
+	@PostMapping("/university/edit/{id}")
+	public String updateUniversity(@PathVariable("id") int id, @RequestParam("name") String universityName){
+		manager.update(universityName, id);
 		return "redirect:/manager";
 	}
 }

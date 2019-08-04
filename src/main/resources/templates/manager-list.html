@@ -37,7 +37,7 @@
                                         <td th:text="${university.getId()}"></td>
                                         <td th:text="${university.getName()}"></td>
                                         <td><a th:href="@{/universities/edit/{id}(id=${university.getId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                        <td><a th:href="@{/universities/delete/{id}(id=${university.getName()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                                        <td><a th:href="@{/universities/delete/{id}(id=${university.getId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                                     </tr>
                                 </tbody>
                             </table>
