@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
+import org.h2.tools.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +36,11 @@ public class DaoFactory {
 		}
 
 		if (driver.equals("org.h2.Driver")){
+			try{
+				org.h2.tools.Server server =  Server.createTcpServer().start();
+			} catch (Exception e){
+				logger.error("could not start H2 server");
+			}
 			initiateDatabase();
 		}
 

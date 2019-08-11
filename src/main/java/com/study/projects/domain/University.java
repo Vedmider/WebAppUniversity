@@ -284,23 +284,34 @@ public class University {
 		lectureDao = new LectureDao(universityId);
 	}
 	
-	public StudentDao getStudentDao() {
+	protected StudentDao getStudentDao() {
 		return studentDao;
 	}
 	
-	public TeacherDao getTeacherDao() {
+	protected TeacherDao getTeacherDao() {
 		return teacherDao;
 	}
 	
-	public GroupDao getGroupDao() {
+	protected GroupDao getGroupDao() {
 		return groupDao;
 	}
 	
-	public ClassroomDao getClassroomDao() {
+	protected ClassroomDao getClassroomDao() {
 		return classroomDao;
 	}
 	
-	public LectureDao getLectureDao() {
+	protected LectureDao getLectureDao() {
 		return lectureDao;
 	}
+
+	public Group getGroupById(Integer id){
+		Group group = null;
+		try{
+			group = groupDao.getByPK(id);
+		} catch (UniversityDBAccessException e ){
+			logger.error("cannot get Group with ID = " + id, e);
+		}
+		return group;
+	}
+
 }

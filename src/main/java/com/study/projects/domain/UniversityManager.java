@@ -78,7 +78,7 @@ public class UniversityManager {
 		
 		if(univ.getGroups().contains(student.getGroup())) {
 			
-			Integer studentId = null;; 
+			Integer studentId = null;
 			try{
 				studentId = studentDao.insertInToDB(student);
 			} catch (UniversityDBAccessException e) {

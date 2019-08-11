@@ -84,7 +84,7 @@ public class GroupDao extends DAOParent<Group, Integer> {
 
 	@Override
 	protected void statementForRetrieve(PreparedStatement statement, Integer key) throws SQLException {
-		statement.setInt(1, key.intValue());
+		statement.setInt(1, key);
 		
 	}
 
