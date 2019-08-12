@@ -12,9 +12,9 @@ public class StudentDao extends DAOParent<Student, Integer>{
 	private int universityId;
 	private static final String insertQuery = "INSERT INTO students (full_name, group_id, university_id) VALUES (?, ?, ?)";
 	private static final String updateQuery = "UPDATE students SET full_name = ? WHERE id = ?";
-	private static final String retrieveQuery = "SELECT * FROM students WHERE id = ?";
+	private static final String retrieveQuery = "SELECT students.*, groups.* FROM students JOIN groups ON groups.id = students.group_id WHERE students.id = ?";
 	private static final String deleteQuery = "DELETE FROM students WHERE id = ?";
-	private static final String getAllQuery = "SELECT * FROM students WHERE university_id = ";
+	private static final String getAllQuery = "SELECT students.*, groups.*  FROM students JOIN groups ON groups.id = students.group_id WHERE students.university_id = ";
 
 	public StudentDao(int universityId) {
 		this.universityId = universityId;
@@ -75,12 +75,12 @@ public class StudentDao extends DAOParent<Student, Integer>{
 		Student stud = null;
 		
 		while(resultSet.next()) {
-			String[] str = resultSet.getString("full_name").split(" ");
+			String[] str = resultSet.getString("students.full_name").trim().split(" ");
 			stud = new Student (str[0], str[1]);
-			Group g = new Group("");
-			g.setId(resultSet.getInt("group_id"));
+			Group g = new Group(resultSet.getString("groups.name"));
+			g.setId(resultSet.getInt("students.group_id"));
 			stud.setGroup(g);
-			stud.setId(resultSet.getInt("id"));
+			stud.setId(resultSet.getInt("students.id"));
 		}
 		
 		return stud;
@@ -91,12 +91,12 @@ public class StudentDao extends DAOParent<Student, Integer>{
 		ArrayList<Student> studList = new ArrayList<>();
 		
 		while(resultSet.next()) {
-			String[] str = resultSet.getString("full_name").split(" ");
+			String[] str = resultSet.getString("students.full_name").trim().split(" ");
 			Student stud = new Student (str[0], str[1]);
-			Group g = new Group("");
-			g.setId(resultSet.getInt("group_id"));
+			Group g = new Group(resultSet.getString("groups.name"));
+			g.setId(resultSet.getInt("students.group_id"));
 			stud.setGroup(g);
-			stud.setId(resultSet.getInt("id"));
+			stud.setId(resultSet.getInt("students.id"));
 			studList.add(stud);
 		}
 		

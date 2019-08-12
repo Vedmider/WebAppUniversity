@@ -36,11 +36,11 @@ public class DaoFactory {
 		}
 
 		if (driver.equals("org.h2.Driver")){
-			try{
-				org.h2.tools.Server server =  Server.createTcpServer().start();
-			} catch (Exception e){
-				logger.error("could not start H2 server");
-			}
+		//	try{
+		//		org.h2.tools.Server server =  Server.createTcpServer("-tcpAllowOthers").start();
+		//	} catch (Exception e){
+		//		logger.error("could not start H2 server");
+		//	}
 			initiateDatabase();
 		}
 

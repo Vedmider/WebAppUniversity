@@ -14,9 +14,9 @@
             var i;
             var x;
             for(i=0; i < arguments.length; i++){
-                x = arguments[i].value;
-                if(x == ''){
-                    alert("Enter a Valid Roll Number");
+                x = arguments[i].value.trim();
+                if(x == ""){
+                    alert("Field " + arguments[i].name + " can not be empty");
                     return false;
                 }
             }
@@ -46,12 +46,12 @@
                         <div class="form-group col-md-8">
                             <label for="groupName" class="col-form-label">Group name</label>
                             <select class="form-control" name="groupName" id="groupName">
-                                <option value="">select group if any</option>
+                                <option value = "">select group if any</option>
                                 <option th:each="group : ${groups}" th:value="${group.getId()}" th:text="'ID:' + ${group.getId()}+ ' group ' + ${group.getName()}"></option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-primary" value="Add student" onclick="return empty(firstName, lastName)">
+                            <input type="submit" class="btn btn-primary" value="Add student" onclick="return empty(firstName, lastName, groupName)">
                         </div>
 
                         <div class="form-group col-md-8"></div>
