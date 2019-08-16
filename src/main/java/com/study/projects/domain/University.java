@@ -314,4 +314,24 @@ public class University {
 		return group;
 	}
 
+	public Student getStudentById (Integer id) {
+		Student student = null;
+		try{
+			student = studentDao.getByPK(id);
+		} catch (UniversityDBAccessException e) {
+			logger.error("Can not get Student with ID " + id, e);
+		}
+		return student;
+	}
+
+	public Teacher getTeacherById (Integer id) {
+		Teacher teacher = null;
+		try{
+			teacher = teacherDao.getByPK(id);
+		} catch (UniversityDBAccessException e) {
+			logger.error("Can not get teacher by id " + id, e);
+		}
+		return teacher;
+	}
+
 }

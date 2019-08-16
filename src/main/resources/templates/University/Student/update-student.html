@@ -29,22 +29,29 @@
 <body>
 <div class="container my-5">
     <a href="javascript:history.go(-1)">Back</a>
-    <h3> Add Teacher</h3>
+    <h3> Update Student</h3>
     <div class="card">
         <div class="card-body">
             <div class="col-md-10">
 
                 <form action="#" method="post"
-                      th:action="@{/entity/add/teacher/{id}(id=${id})}" >
+                      th:action="@{/entity/edit/student/{id}/{studentID}(id=${id}, studentID=${studentID})}" >
                     <div class="row">
                         <div class="form-group col-md-8">
-                            <label for="firstName" class="col-form-label">First name</label> <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Input student first name">
+                            <label for="firstName" class="col-form-label">First name</label> <input type="text" name="firstName" th:value="${firstName}" class="form-control" id="firstName">
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="lastName" class="col-form-label">Last name</label> <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Input student last name">
+                            <label for="lastName" class="col-form-label">Last name</label> <input type="text" name="lastName" th:value="${lastName}" class="form-control" id="lastName">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="groupName" class="col-form-label">Group name</label>
+                            <select class="form-control" name="groupName" id="groupName">
+                                <option th:value="${defaultGroupID}">select group if any</option>
+                                <option th:each="group : ${groups}" th:value="${group.getId()}" th:text="'ID:' + ${group.getId()}+ ' group ' + ${group.getName()}"></option>
+                            </select>
                         </div>
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-primary" value="Add teacher" onclick="return empty(firstName, lastName, groupName)">
+                            <input type="submit" class="btn btn-primary" value="Update student" onclick="return empty(firstName, lastName, groupName)">
                         </div>
 
                         <div class="form-group col-md-8"></div>
