@@ -1,10 +1,6 @@
 package com.study.projects.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -17,7 +13,7 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 	private static final Logger logger = LoggerFactory.getLogger(ClassroomDao.class);
 	private static final String insertQuery = "INSERT INTO classrooms (class_number, university_id) VALUES (?, ?)";
 	private static final String updateQuery = "UPDATE classrooms SET class_number = ? WHERE id = ?";
-	private static final String retrieveQuery = "SELECT class_number FROM classrooms WHERE id = ?";
+	private static final String retrieveQuery = "SELECT * FROM classrooms WHERE id = ?";
 	private static final String deleteQuery = "DELETE FROM classrooms WHERE id = ?";
 	private static final String getAllQuery = "SELECT * FROM classrooms WHERE university_id = ";
 	
@@ -101,7 +97,7 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 				}
 				
 			} catch (SQLException e) {
-				throw new  UniversityDBAccessException("Cannot cose connection", e);
+				throw new  UniversityDBAccessException("Cannot close connection", e);
 			}	
 		}
 		
@@ -122,7 +118,7 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 			resultSet = statement.executeQuery();
 			object = parseRetrieveSQL(resultSet);
 		} catch (SQLException e) {
-			throw new UniversityDBAccessException("Cannot retrieve from database", e);
+			throw new UniversityDBAccessException("Cannot retrieve classroom from database", e);
 		} finally {
 			try{
 				if(resultSet != null) {
@@ -253,6 +249,12 @@ public class ClassroomDao extends DAOParent<Classroom, Integer>{
 		Classroom classroom = null;
 		while (resultSet.next()) {
             classroom = new Classroom(resultSet.getInt("class_number"));
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+			int columnCount = rsmd.getColumnCount();
+			for (int i = 1; i <= columnCount; i++ ) {
+				String name = rsmd.getColumnName(i);
+				logger.debug("Column count == " + columnCount + "column " + i + " in table classroom is: " + name);
+			}
             classroom.setId(resultSet.getInt("id"));
         }
 		return classroom;

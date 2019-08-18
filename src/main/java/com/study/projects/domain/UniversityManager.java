@@ -89,7 +89,7 @@ public class UniversityManager {
 				student.setId(studentId);
 			}
 			
-			logger.info("student {} succesfully created with ID {}", student.getFullName(), studentId);
+			logger.info("student {} successfully created with ID {}", student.getFullName(), studentId);
 			return univ.addStudent(student);
 		}
 		return false;
@@ -120,7 +120,7 @@ public class UniversityManager {
 		if(teacherId != null) {
 			teacher.setId(teacherId);
 			
-			logger.info("teacher succesfully created with ID {}", teacherId);
+			logger.info("teacher successfully created with ID {}", teacherId);
 			return univ.addTeacher(teacher);
 		}
 		
@@ -151,7 +151,7 @@ public class UniversityManager {
 		
 		if (groupId != null) {
 			group.setId(groupId);
-			logger.info("succesfully added group {} t University {}", group.getName(), univ.getName());
+			logger.info("successfully added group {} to University {}", group.getName(), univ.getName());
 			return univ.addGroup(group);
 		}
 		return false;
@@ -173,7 +173,7 @@ public class UniversityManager {
 	public boolean addClassroomToUniversity(University univ, Classroom classroom) {
 		Integer classroomId = null;
 		
-		logger.info("adding classrom {} to University {}", classroom.getNumber(), univ.getName());
+		logger.info("adding classroom {} to University {}", classroom.getNumber(), univ.getName());
 		try { 
 			classroomId = univ.getClassroomDao().insertInToDB(classroom);
 		} catch (UniversityDBAccessException e) {
@@ -192,7 +192,7 @@ public class UniversityManager {
 	public boolean removeClassroomFromUniversity(University univ, Classroom classroom) {
 		boolean isRemoved = false;
 		
-		logger.info("removing classroom {} from University {}", classroom.getNumber(), univ.getName());
+		logger.info("removing classroom with ID {} from University {}", classroom.getId(), univ.getName());
 		try {
 			isRemoved = univ.getClassroomDao().removeFromDB(classroom);
 		} catch (UniversityDBAccessException e) {
@@ -263,11 +263,11 @@ public class UniversityManager {
 	public boolean updateClassroom(University univ, Classroom classroom) {
 		boolean isUpdated = false;
 		
-		logger.info("updating classroom N {} in University {}", classroom.getNumber(), univ.getName());
+		logger.info("updating classroom with ID {} in University {}", classroom.getId(), univ.getName());
 		try {
 			isUpdated = univ.getClassroomDao().update(classroom);
 		} catch (UniversityDBAccessException e) {
-			logger.error("Can not update classroom N " + classroom.getNumber(), e);
+			logger.error("Can not update classroom ID " + classroom.getNumber(), e);
 		}
 		
 		return isUpdated; 

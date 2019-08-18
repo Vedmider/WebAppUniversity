@@ -334,4 +334,15 @@ public class University {
 		return teacher;
 	}
 
+	public Classroom getClassroomById(Integer id) {
+		Classroom classroom = null;
+		try{
+			classroom = classroomDao.getByPK(id);
+		} catch (UniversityDBAccessException e) {
+			logger.error("can not get classroom with such ID " + id, e);
+		}
+
+		return classroom;
+	}
+
 }

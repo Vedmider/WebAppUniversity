@@ -8,8 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.study.projects.domain.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UniversityDao {
+	private final static Logger logger = LoggerFactory.getLogger(UniversityDao.class);
 	protected DaoFactory daoFactory = DaoFactory.getInstance();
 	private static final String insertQuery = "INSERT INTO universities (university_name) VALUES (?)";
 	private static final String updateQuery = "UPDATE universities SET university_name = ? WHERE university_id = ?";
@@ -89,7 +92,7 @@ public class UniversityDao {
 			resultSet = statement.getGeneratedKeys();
 			
 			if(rowsAffected != 1) {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 			while(resultSet.next()) {
@@ -103,12 +106,12 @@ public class UniversityDao {
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 			} catch (SQLException e) {
 				throw new UniversityDBAccessException("cannot close connection", e);
@@ -133,7 +136,7 @@ public class UniversityDao {
 			if(rowsAffected == 1) {
 				return true;
 			} else {
-				System.out.println("1 row was not affected");
+				logger.info("1 row was not affected");
 			}
 			
 		} catch(SQLException e) {
@@ -142,12 +145,12 @@ public class UniversityDao {
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 				
 			} catch (SQLException e) {
@@ -177,17 +180,17 @@ public class UniversityDao {
 			try{
 				if(resultSet != null) {
 					resultSet.close();
-					System.out.println("ResultSet close");
+					logger.debug("ResultSet close");
 				}
 				
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}	
 			} catch (SQLException e) {
 				throw new UniversityDBAccessException("cannot close connection", e);
@@ -211,7 +214,7 @@ public class UniversityDao {
 			if(rowsAffected == 1) {
 				return true;
 			} else {
-				System.out.println("1 row was not affected");
+				logger.debug("1 row was not affected");
 			}
 			
 		} catch(SQLException e) {
@@ -220,12 +223,12 @@ public class UniversityDao {
 			try{
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}
 				
 			} catch (SQLException e) {
@@ -254,17 +257,17 @@ public class UniversityDao {
 			try{
 				if(resultSet != null) {
 					resultSet.close();
-					System.out.println("ResultSet close");
+					logger.debug("ResultSet close");
 				}
 				
 				if (statement != null) {
 					statement.close();
-					System.out.println("Statement close");
+					logger.debug("Statement close");
 				}
 				
 				if(con != null) {
 					con.close();
-					System.out.println("Connection close");
+					logger.debug("Connection close");
 				}	
 			} catch (SQLException e) {
 				throw new UniversityDBAccessException("cannot close connection", e);

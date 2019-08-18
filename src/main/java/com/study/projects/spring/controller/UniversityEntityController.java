@@ -172,6 +172,7 @@ public class UniversityEntityController {
     public String addTeacher(@PathVariable("id") int id, @RequestParam Map<String, String> params){
 
         Teacher teacher = new Teacher(params.get("firstName").trim(), params.get("lastName").trim());
+        manager.addTeacherToUniversity(manager.getById(id), teacher);
         return "redirect:/entity/" + id;
     }
 
@@ -207,7 +208,7 @@ public class UniversityEntityController {
         University univ = manager.getById(id);
         Teacher teacher = new Teacher(params.get("firstName").trim(), params.get("lastName").trim());
         manager.updateTeacher(univ, teacher);
-        return "/entity/" + id;
+        return "redirect:/entity/" + id;
     }
 
     @GetMapping("/add/classroom/{id}")
@@ -218,11 +219,48 @@ public class UniversityEntityController {
 
     @PostMapping("/add/classroom/{id}")
     public String addClassroom(@PathVariable("id") int id,
-                               @RequestParam Map<String, Integer> params) {
+                               @RequestParam Map<String, String> params) {
 
         University univ = manager.getById(id);
-        Classroom classroom = new Classroom(params.get("classNumber"));
+        Classroom classroom = new Classroom(Integer.parseInt(params.get("classNumber")));
         manager.addClassroomToUniversity(univ, classroom);
         return "redirect:/entity/" + id;
     }
+
+    @GetMapping("/delete/classroom/{id}/{classID}")
+    public String deleteClassroom(@PathVariable("id") int id,
+                                @PathVariable("classID") int classID){
+
+        Classroom classroom = new Classroom(0);
+        classroom.setId(classID);
+        manager.removeClassroomFromUniversity(manager.getById(id), classroom);
+        return  "redirect:/entity/" + id;
+    }
+
+    @GetMapping("/edit/classroom/{id}/{classID}")
+    public String updateClassroomPage(@PathVariable("id") int id,
+                                      @PathVariable("classID") int classID,
+                                      ModelMap model){
+
+        Classroom classroom = manager.getById(id).getClassroomById(classID);
+        System.out.println("Get Classroom from db: ID " + classID + " number " + classroom.getNumber() );
+        model.addAttribute("id", id);
+        model.addAttribute("classID", classID);
+        model.addAttribute("classroom", classroom);
+        return "University/Classroom/update-classroom";
+    }
+
+    @PostMapping("/edit/classroom/{id}/{classID}")
+    public String updateClassroom(@PathVariable("id") int id,
+                                  @PathVariable("classID") int classID,
+                                  @RequestParam Map<String, String> params){
+
+        University univ = manager.getById(id);
+        Classroom classroom = new Classroom(Integer.parseInt(params.get("classNumber")));
+        classroom.setId(classID);
+        manager.updateClassroom(univ, classroom);
+        return "redirect:/entity/" + id;
+    }
+
+
 }
