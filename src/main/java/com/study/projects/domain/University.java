@@ -284,23 +284,65 @@ public class University {
 		lectureDao = new LectureDao(universityId);
 	}
 	
-	public StudentDao getStudentDao() {
+	protected StudentDao getStudentDao() {
 		return studentDao;
 	}
 	
-	public TeacherDao getTeacherDao() {
+	protected TeacherDao getTeacherDao() {
 		return teacherDao;
 	}
 	
-	public GroupDao getGroupDao() {
+	protected GroupDao getGroupDao() {
 		return groupDao;
 	}
 	
-	public ClassroomDao getClassroomDao() {
+	protected ClassroomDao getClassroomDao() {
 		return classroomDao;
 	}
 	
-	public LectureDao getLectureDao() {
+	protected LectureDao getLectureDao() {
 		return lectureDao;
 	}
+
+	public Group getGroupById(Integer id){
+		Group group = null;
+		try{
+			group = groupDao.getByPK(id);
+		} catch (UniversityDBAccessException e ){
+			logger.error("cannot get Group with ID = " + id, e);
+		}
+		return group;
+	}
+
+	public Student getStudentById (Integer id) {
+		Student student = null;
+		try{
+			student = studentDao.getByPK(id);
+		} catch (UniversityDBAccessException e) {
+			logger.error("Can not get Student with ID " + id, e);
+		}
+		return student;
+	}
+
+	public Teacher getTeacherById (Integer id) {
+		Teacher teacher = null;
+		try{
+			teacher = teacherDao.getByPK(id);
+		} catch (UniversityDBAccessException e) {
+			logger.error("Can not get teacher by id " + id, e);
+		}
+		return teacher;
+	}
+
+	public Classroom getClassroomById(Integer id) {
+		Classroom classroom = null;
+		try{
+			classroom = classroomDao.getByPK(id);
+		} catch (UniversityDBAccessException e) {
+			logger.error("can not get classroom with such ID " + id, e);
+		}
+
+		return classroom;
+	}
+
 }

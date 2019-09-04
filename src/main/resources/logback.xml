@@ -19,7 +19,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.study.projects" level="debug" additivity="false">
+    <logger name="com.study.projects" level="info" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Add User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
+    <script type="text/javascript">
+        function empty() {
+            var i;
+            var x;
+            for(i=0; i < arguments.length; i++){
+                x = arguments[i].value.trim();
+                if(x == ""){
+                    alert("Field " + arguments[i].name + " can not be empty");
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+</head>
+
+<body>
+<div class="container my-5">
+    <a href="javascript:history.go(-1)">Back</a>
+    <h3> Update Teacher</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+
+                <form action="#" method="post"
+                      th:action="@{/entity/edit/teacher/{id}/{teacherID}(id=${id}, teacherID=${teacherID})}" >
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="firstName" class="col-form-label">First name</label> <input type="text" name="firstName" th:value="${firstName}" class="form-control" id="firstName">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="lastName" class="col-form-label">Last name</label> <input type="text" name="lastName" th:value="${lastName}" class="form-control" id="lastName">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" value="Update teacher" onclick="return empty(firstName, lastName, groupName)">
+                        </div>
+
+                        <div class="form-group col-md-8"></div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

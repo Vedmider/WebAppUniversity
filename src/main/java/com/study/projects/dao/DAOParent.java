@@ -24,7 +24,10 @@ public abstract class DAOParent<T, PK> implements CRUDInterface<T, PK> {
 	protected abstract void statementForRemove(PreparedStatement statement, T object) throws SQLException;
 	protected abstract T parseRetrieveSQL(ResultSet resultSet) throws SQLException;
 	protected abstract ArrayList<T> parseGetAllSQL(ResultSet resultSet) throws SQLException;
-	
+
+
+
+
 	@Override
 	public Integer insertInToDB(T object) throws UniversityDBAccessException{
 		String query = getInsertSQL();
