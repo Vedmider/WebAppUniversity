@@ -74,8 +74,17 @@ class WebRestController {
 
         if (isInsertOk){
             result += "You successfully added lecture to university";
+            logger.info("Lecture successfully added to DB." +
+                            " Values: subject {}, classroom {}, group {}, teacher {}, time {}",
+                            lecture.getSubject(),
+                            lecture.getClassroom().getNumber(),
+                            lecture.getGroup().getName(),
+                            lecture.getTeacher(),
+                            lecture.getDate()
+                        );
         } else {
             result += "Can not add lecture.\n Please check if teacher, group or classroom is vacant on this time";
+            logger.warn("Can not add lecture.");
         }
 
         return ResponseEntity.ok(result);

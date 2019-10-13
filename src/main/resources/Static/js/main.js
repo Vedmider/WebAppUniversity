@@ -32,14 +32,15 @@ function fire_ajax_submit() {
         dataType: 'json',
         cache: false,
         timeout: 600000,
-        success: function (response) {
-            alert(JSON.stringify(response));
+        success: function (data) {
             $("#submitLecture").prop("disabled", false);
-            $("#add-lecture")[0].reset();
-
+            alert("Json post successful:  " + JSON.stringify(data));
+            window.location.reload(true);
         },
         error: function (e) {
-            alert("Ups..error.\n" + e.responseText);
+            $("#submitLecture").prop("disabled", false);
+            alert("This answer is passed by error function\n " +  e.responseText);
+            window.location.reload(true);
         }
     });
 
