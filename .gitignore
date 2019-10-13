@@ -1,7 +1,21 @@
-/target/
-.idea/*
-logs/*
+# Default ignored files
+/workspace.xml
+`# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Compiled class file
+*.class
+
+.idea
+*.iml
+
 .classpath
 .project
-.settings/*
-.iml
+.settings/
+target/

@@ -9,11 +9,44 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#datepicker").datepicker({dateFormat: "dd-mm-yy"});
+        });
+
+        function empty() {
+            var i;
+            var x;
+            for(i=0; i < arguments.length; i++){
+                x = arguments[i].value.trim();
+                if(x == ""){
+                    alert("Field " + arguments[i].name + " can not be empty");
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
 </head>
 
 <body>
 <div class="container my-2">
     <p class="my-5" th:text="University + ' ' + ${university.getName()}"> </p>
+
+    <div class="container my-2" id="testDIV" >
+        <form action="#" method="post"  th:action="@{/entity/lecture/{id} (id=${university.getId()})}">
+            <div class="container">
+                <div class="hero-unit">
+                    <input id="datepicker" name="datepicker" placeholder="click to show datepicker" readonly="true"
+                           style="text-align:center;"  type="text"/>    <input type="submit" class="btn btn-primary" value="Get lectures" onclick="return empty(datepicker)">
+                    <br>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="card">
         <div class="card-body">
             <div th:switch="${students}" class="container my-5">

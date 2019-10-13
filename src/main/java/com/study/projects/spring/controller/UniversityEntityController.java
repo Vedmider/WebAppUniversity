@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -260,6 +261,39 @@ public class UniversityEntityController {
         classroom.setId(classID);
         manager.updateClassroom(univ, classroom);
         return "redirect:/entity/" + id;
+    }
+
+    @PostMapping("/lecture/{id}")
+    public String getLecturesPage(@RequestParam("datepicker") String date,
+                                  @PathVariable("id") int id,
+                                  ModelMap model){
+
+        University univ = manager.getById(id);
+        String[] prepareDate = date.trim().split("-");
+        int day = Integer.parseInt(prepareDate[0]);
+        int month = Integer.parseInt(prepareDate[1]);
+        int year = Integer.parseInt(prepareDate[2]);
+        LocalDate localDate = LocalDate.of(year, month, day);
+        DaySchedule daySchedule = univ.getYearSchedule().get(localDate);
+        model.addAttribute("daySchedule", daySchedule);
+        model.addAttribute("id", id);
+        model.addAttribute("date", date);
+
+        return "University/Lecture/lectures";
+    }
+
+    @GetMapping("/lecture/add/{id}")
+    public String addLecturePage(@PathVariable("id") int id,
+                                 @RequestParam("date") String date,
+                                 ModelMap model){
+
+        University univ = manager.getById(id);
+        model.addAttribute("classrooms", univ.getClassrooms());
+        model.addAttribute("groups", univ.getGroups());
+        model.addAttribute("teachers", univ.getTeachers());
+        model.addAttribute("id", id);
+        model.addAttribute("date", date);
+        return "University/Lecture/add-lecture";
     }
 
 

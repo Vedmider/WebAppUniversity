@@ -86,6 +86,10 @@ public class DaoFactory {
 			statement.addBatch(createStudents);
 			statement.addBatch(createClassrooms);
 			statement.addBatch(createLectures);
+			statement.addBatch("INSERT INTO groups (name, university_id) VALUES ('Griffindor', 1)");
+			statement.addBatch("INSERT INTO classrooms (class_number, university_id) VALUES (234, 1)");
+			statement.addBatch("INSERT INTO  students (full_name, group_id, university_id) VALUES ('Jackie Chan', 1, 1)");
+			statement.addBatch("INSERT INTO teachers (full_name, university_id) VALUES ('Bruce Lee', 1)");
 			statement.executeBatch();
 			con.commit();
 

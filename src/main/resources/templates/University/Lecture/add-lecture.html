@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Add User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
+    <script type="text/javascript">
+        function empty() {
+            var i;
+            var x;
+            for(i=0; i < arguments.length; i++){
+                x = arguments[i].value.trim();
+                if(x == ""){
+                    alert("Field " + arguments[i].name + " can not be empty");
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+</head>
+
+<body>
+<div class="container my-5">
+    <a href="javascript:history.go(-1)">Back</a>
+    <h3> Add Lecture</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+                <form id="add-lecture">
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="universityId" class="col-form-label">University ID  :&nbsp;</label><input type="text" th:align="middle"  th:value="${id}" name="universityId" id="universityId" disabled="disabled">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="subject" class="col-form-label">Subject</label> <input type="text" name="subject" class="form-control" id="subject" placeholder="Input subject">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="classroom" class="col-form-label">Classroom</label>
+                            <select class="form-control" name="classroom" id="classroom">
+                                <option value = "">select classroom if any</option>
+                                <option th:each="classroom : ${classrooms}" th:value="${classroom.getId()}" th:text="'№ ' + ${classroom.getNumber()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="groupName" class="col-form-label">Group</label>
+                            <select class="form-control" name="groupName" id="groupName">
+                                <option value = "">select group if any</option>
+                                <option th:each="group : ${groups}" th:value="${group.getId()}" th:text="'ID:' + ${group.getId()}+ ' group ' + ${group.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="teacher" class="col-form-label">Teacher</label>
+                            <select class="form-control" name="teacher" id="teacher">
+                                <option value = ""> Select teacher if any</option>
+                                <option th:each="teacher : ${teachers}" th:value="${teacher.getId()}" th:text="${teacher.getFullName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="date" class="col-form-label">Date  :&nbsp;</label><input type="text" th:align="middle"  th:value="${date}" name="date" id="date" disabled="disabled">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="time" class="col-form-label">Time  :&nbsp;</label><input type="time" th:align="middle" name="time" id="time">
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    id="submitLecture"
+                                    onclick="return empty(subject, classroom, groupName, teacher, time )">Add lecture</button>
+<!--                           /* <input type="submit" id="submitLecture" class="btn btn-primary" value="Add lecture" onclick="return empty(subject, classroom, groupName, teacher, time )">*/-->
+                        </div>
+                        <div class="form-group col-md-8"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/main.js}" th:inline="javascript">
+    var date = [[${id}]];
+</script>
+</body>
+
+</html>
